@@ -4,7 +4,6 @@
       <p style="font-weight: 700; margin: 0 0 6px;">
         <%= pluralize(book.errors.count, "error") %> prevented this book from being saved:
       </p>
-
       <ul style="margin: 0; padding-left: 1.2rem;">
         <% book.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -13,20 +12,37 @@
     </div>
   <% end %>
 
+  <%# ISBN Lookup %>
+  <div style="background: #fdf0f5; border: 1px solid #f0c4d0; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.75rem;">
+    <p style="font-size: 0.88rem; font-weight: 700; color: #7d3554; margin: 0 0 4px;">🔍 Look up by ISBN</p>
+    <p style="font-size: 0.82rem; color: #b07090; margin: 0 0 10px;">Enter an ISBN and we'll auto-fill the details from Open Library.</p>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <input type="text"
+        id="isbn_lookup"
+        placeholder="e.g. 9780141036144"
+        style="flex: 1; border: 1.5px solid #f0c4d0; border-radius: 10px; padding: 9px 14px; font-size: 0.95rem; font-family: Georgia, serif; color: #4a1c35; background: white;" />
+      <button type="button"
+        id="isbn_fetch_btn"
+        style="background-color: #c2547a; color: white; border: none; border-radius: 20px; padding: 10px 20px; font-size: 0.88rem; font-family: Georgia, serif; font-weight: 700; cursor: pointer; white-space: nowrap;">
+        Fill Details
+      </button>
+    </div>
+    <p id="isbn_status" style="font-size: 0.82rem; margin: 8px 0 0; min-height: 18px; color: #b07090;"></p>
+  </div>
+
   <% [
     [:title, "Title", :text_field],
     [:author, "Author", :text_field],
     [:genre, "Genre", :text_field],
     [:isbn, "ISBN", :text_field]
   ].each do |field, label, type| %>
-
     <div style="margin-bottom: 1.25rem;">
       <%= form.label field,
         label,
         style: "display: block; font-size: 0.88rem; font-weight: 700; color: #7d3554; margin-bottom: 6px;" %>
-
       <%= form.send(type,
         field,
+        id: "book_#{field}",
         style: "
           width: 100%;
           border: 1.5px solid #{book.errors[field].any? ? '#f5b7b7' : '#f0c4d0'};
@@ -40,16 +56,15 @@
         "
       ) %>
     </div>
-
   <% end %>
 
   <div style="margin-bottom: 1.5rem;">
     <%= form.label :description,
       "Description",
       style: "display: block; font-size: 0.88rem; font-weight: 700; color: #7d3554; margin-bottom: 6px;" %>
-
     <%= form.textarea :description,
       rows: 5,
+      id: "book_description",
       style: "
         width: 100%;
         border: 1.5px solid #{book.errors[:description].any? ? '#f5b7b7' : '#f0c4d0'};
@@ -66,13 +81,12 @@
   </div>
 
   <div style="margin-bottom: 1.5rem;">
-    <%= form.label :cover_image, "Book Cover", style: "display:block; font-size:0.88rem; font-weight:700; color:#7d3554; margin-bottom:6px;" %>
-
+    <%= form.label :cover_image, "Book Cover",
+      style: "display:block; font-size:0.88rem; font-weight:700; color:#7d3554; margin-bottom:6px;" %>
     <%= form.file_field :cover_image,
       accept: "image/*",
       style: "width:100%; border:1.5px solid #f0c4d0; border-radius:10px; padding:10px 14px; font-size:0.95rem; font-family:Georgia,serif; color:#4a1c35; background:#fffafc; box-sizing:border-box;" %>
   </div>
-
 
   <div style="display: flex; align-items: center; gap: 12px;">
     <%= form.submit "Save Book",
@@ -88,15 +102,7 @@
         cursor: pointer;
       "
     %>
-
-    <%= link_to "Cancel",
-      books_path,
-      style: "
-        color: #b07090;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-decoration: none;
-      "
-    %>
+    <%= link_to "Cancel", books_path,
+      style: "color: #b07090; font-size: 0.9rem; font-weight: 600; text-decoration: none;" %>
   </div>
 <% end %>
