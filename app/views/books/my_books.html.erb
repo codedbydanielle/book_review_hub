@@ -10,17 +10,20 @@
   </p>
 
   <% if @books.any? %>
-
-    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:28px;">
-
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(330px, 330px)); gap:32px;">
       <% @books.each do |book| %>
+        <% average_rating = book.reviews.any? ? book.reviews.average(:rating).to_f.round(1) : 0 %>
 
-        <div style="background:white; border:1px solid #f0c4d0; border-radius:24px; overflow:hidden; box-shadow:0 10px 20px rgba(0,0,0,0.04);">
-
-          <div style="background:linear-gradient(135deg,#fff0f3,#fde7ef); height:220px; display:flex; align-items:center; justify-content:center;">
-            <div style="width:120px; height:170px; background:white; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:3rem; box-shadow:0 8px 18px rgba(0,0,0,0.08);">
-              📖
-            </div>
+        <div style="background:white; border:1px solid #f0c4d0; border-radius:22px; overflow:hidden; box-shadow:0 10px 22px rgba(0,0,0,0.04);">
+          <div style="height:220px; background:linear-gradient(135deg,#fff0f3,#fde7ef); display:flex; align-items:center; justify-content:center; border-bottom:1px solid #f0c4d0;">
+            <% if book.cover_image.attached? %>
+              <%= image_tag book.cover_image,
+                style:"width:120px; height:170px; object-fit:cover; border-radius:10px; box-shadow:0 8px 18px rgba(0,0,0,0.08);" %>
+            <% else %>
+              <div style="width:120px; height:170px; background:white; border-radius:10px; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 18px rgba(0,0,0,0.08); font-size:2.2rem;">
+                📖
+              </div>
+            <% end %>
           </div>
 
           <div style="padding:24px;">
