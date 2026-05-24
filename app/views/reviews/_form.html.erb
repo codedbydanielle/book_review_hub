@@ -1,0 +1,34 @@
+<%= form_with(model: [book, review], class: "mt-6 space-y-4") do |form| %>
+  <% if review.errors.any? %>
+    <div class="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+      <p class="font-semibold">
+        <%= pluralize(review.errors.count, "error") %> prevented this review from being saved:
+      </p>
+
+      <ul class="mt-2 list-disc pl-5 text-sm">
+        <% review.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :rating, "Rating", class: "block text-sm font-semibold text-gray-700" %>
+    <%= form.select :rating,
+      options_for_select((1..5).map { |n| ["#{n} star#{'s' unless n == 1}", n] }, review.rating),
+      { prompt: "Choose a rating" },
+      class: "mt-2 block w-full rounded-md border border-gray-300 px-3 py-2" %>
+  </div>
+
+  <div>
+    <%= form.label :content, "Review", class: "block text-sm font-semibold text-gray-700" %>
+    <%= form.text_area :content,
+      rows: 4,
+      placeholder: "Share your thoughts about this book...",
+      class: "mt-2 block w-full rounded-md border border-gray-300 px-3 py-2" %>
+  </div>
+
+  <%= form.submit "Submit Review",
+    class: "rounded-md bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-500" %>
+<% end %>
