@@ -1,9 +1,21 @@
-<% content_for :title, "New book" %>
+<% content_for :title, "Add a Book" %>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New book</h1>
+<div style="max-width: 600px; margin: 0 auto;">
+  <h1 style="font-size: 2rem; font-weight: 700; color: #4a1c35; margin-bottom: 0.25rem;">
+    Add a Book
+  </h1>
 
-  <%= render "form", book: @book %>
+  <p style="color: #b07090; margin-bottom: 2rem; font-size: 0.95rem;">
+    Share a book with the community
+  </p>
 
-  <%= link_to "Back to books", books_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <div style="background: white; border: 1px solid #f0c4d0; border-radius: 20px; padding: 2rem;">
+    <%= render "form", book: @book %>
+  </div>
+
+  <div style="margin-top: 1.5rem;">
+    <%= link_to "← Back to Books",
+      books_path,
+      style: "color: #c2547a; font-weight: 600; text-decoration: none; font-size: 0.9rem;" %>
+  </div>
 </div>

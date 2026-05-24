@@ -1,0 +1,164 @@
+<div style="max-width: 420px; margin: 0 auto;">
+  <div style="text-align: center; margin-bottom: 2.2rem;">
+    <p style="font-size: 2.8rem; margin: 0;">📚</p>
+
+    <h1 style="
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #4a1c35;
+      margin: 10px 0 6px;
+    ">
+      Join the community
+    </h1>
+
+    <p style="
+      color: #b07090;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0;
+    ">
+      Create your cozy reading account ✨
+    </p>
+  </div>
+
+  <div style="
+    background: white;
+    border: 1px solid #f0c4d0;
+    border-radius: 24px;
+    padding: 2.2rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+  ">
+    <%= form_for(resource,
+      as: resource_name,
+      url: registration_path(resource_name)) do |f| %>
+
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div style="margin-bottom: 1.25rem;">
+        <%= f.label :email,
+          style: "
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #7d3554;
+            margin-bottom: 6px;
+          "
+        %>
+
+        <%= f.email_field :email,
+          autofocus: true,
+          autocomplete: "email",
+          placeholder: "you@example.com",
+          style: "
+            width: 100%;
+            border: 1.5px solid #f0c4d0;
+            border-radius: 12px;
+            padding: 11px 14px;
+            font-size: 0.95rem;
+            font-family: Georgia, serif;
+            color: #4a1c35;
+            background: #fffafc;
+            box-sizing: border-box;
+          "
+        %>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <%= f.label :password,
+          style: "
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #7d3554;
+            margin-bottom: 6px;
+          "
+        %>
+
+        <% if @minimum_password_length %>
+          <p style="
+            font-size: 0.8rem;
+            color: #b07090;
+            margin: 0 0 6px;
+          ">
+            <%= @minimum_password_length %> characters minimum
+          </p>
+        <% end %>
+
+        <%= f.password_field :password,
+          autocomplete: "new-password",
+          placeholder: "Create a password",
+          style: "
+            width: 100%;
+            border: 1.5px solid #f0c4d0;
+            border-radius: 12px;
+            padding: 11px 14px;
+            font-size: 0.95rem;
+            font-family: Georgia, serif;
+            color: #4a1c35;
+            background: #fffafc;
+            box-sizing: border-box;
+          "
+        %>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= f.label :password_confirmation,
+          "Confirm Password",
+          style: "
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #7d3554;
+            margin-bottom: 6px;
+          "
+        %>
+
+        <%= f.password_field :password_confirmation,
+          autocomplete: "new-password",
+          placeholder: "Repeat your password",
+          style: "
+            width: 100%;
+            border: 1.5px solid #f0c4d0;
+            border-radius: 12px;
+            padding: 11px 14px;
+            font-size: 0.95rem;
+            font-family: Georgia, serif;
+            color: #4a1c35;
+            background: #fffafc;
+            box-sizing: border-box;
+          "
+        %>
+      </div>
+
+      <%= f.submit "Create Account",
+        style: "
+          width: 100%;
+          background-color: #c2547a;
+          color: white;
+          border: none;
+          border-radius: 999px;
+          padding: 13px;
+          font-size: 1rem;
+          font-family: Georgia, serif;
+          font-weight: 700;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgba(194,84,122,0.18);
+        "
+      %>
+    <% end %>
+  </div>
+
+  <div style="
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.88rem;
+    color: #b07090;
+    line-height: 1.6;
+  ">
+    <p style="margin-bottom: 10px;">
+      Already have an account?
+    </p>
+
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

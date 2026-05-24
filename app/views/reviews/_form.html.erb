@@ -1,34 +1,104 @@
-<%= form_with(model: [book, review], class: "mt-6 space-y-4") do |form| %>
+<%= form_with(model: [book, review], style: "margin-top: 1.5rem;") do |form| %>
   <% if review.errors.any? %>
-    <div class="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
-      <p class="font-semibold">
-        <%= pluralize(review.errors.count, "error") %> prevented this review from being saved:
-      </p>
-
-      <ul class="mt-2 list-disc pl-5 text-sm">
-        <% review.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+    <div style="
+      background: #fdecea;
+      border: 1px solid #f5b7b7;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      color: #9b2c2c;
+      font-size: 0.88rem;
+    ">
+      <% review.errors.full_messages.each do |msg| %>
+        <p style="margin: 0 0 4px;"><%= msg %></p>
+      <% end %>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :rating, "Rating", class: "block text-sm font-semibold text-gray-700" %>
+  <div style="margin-bottom: 1rem;">
+    <%= form.label :rating,
+      "Your Rating",
+      style: "
+        display: block;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: #7d3554;
+        margin-bottom: 6px;
+      "
+    %>
+
     <%= form.select :rating,
-      options_for_select((1..5).map { |n| ["#{n} star#{'s' unless n == 1}", n] }, review.rating),
-      { prompt: "Choose a rating" },
-      class: "mt-2 block w-full rounded-md border border-gray-300 px-3 py-2" %>
+      options_for_select(
+        (1..5).map { |n| ["#{'★' * n} #{n} star#{'s' unless n == 1}", n] },
+        review.rating
+      ),
+      { prompt: "Choose a rating…" },
+      style: "
+        border: 1.5px solid #f0c4d0;
+        border-radius: 12px;
+        padding: 10px 14px;
+        font-size: 0.95rem;
+        font-family: Georgia, serif;
+        color: #4a1c35;
+        background: #fffafc;
+        width: 100%;
+        box-sizing: border-box;
+      "
+    %>
+
+    <p style="
+      font-size: 0.78rem;
+      color: #b07090;
+      margin-top: 6px;
+      margin-bottom: 0;
+    ">
+      Be honest — your review helps other readers ✨
+    </p>
   </div>
 
-  <div>
-    <%= form.label :content, "Review", class: "block text-sm font-semibold text-gray-700" %>
+  <div style="margin-bottom: 1.4rem;">
+    <%= form.label :content,
+      "Your Review",
+      style: "
+        display: block;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: #7d3554;
+        margin-bottom: 6px;
+      "
+    %>
+
     <%= form.text_area :content,
-      rows: 4,
-      placeholder: "Share your thoughts about this book...",
-      class: "mt-2 block w-full rounded-md border border-gray-300 px-3 py-2" %>
+      rows: 5,
+      placeholder: "What did you love, hate, or never stop thinking about?",
+      style: "
+        width: 100%;
+        border: 1.5px solid #f0c4d0;
+        border-radius: 12px;
+        padding: 12px 14px;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        font-family: Georgia, serif;
+        color: #4a1c35;
+        background: #fffafc;
+        box-sizing: border-box;
+        resize: vertical;
+      "
+    %>
   </div>
 
-  <%= form.submit "Submit Review",
-    class: "rounded-md bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-500" %>
+  <%= form.submit "Post Review",
+    style: "
+      background-color: #c2547a;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 11px 26px;
+      font-size: 0.92rem;
+      font-family: Georgia, serif;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(194,84,122,0.18);
+    "
+  %>
 <% end %>

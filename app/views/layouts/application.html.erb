@@ -1,48 +1,59 @@
-<body class="min-h-screen bg-slate-50">
-  <nav class="border-b border-slate-200 bg-white shadow-sm">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-      <%= link_to "Book Review Hub", root_path,
-        class: "text-2xl font-extrabold text-slate-900 hover:text-blue-700 transition" %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Book Review Hub" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
 
-      <div class="flex items-center gap-4">
-        <%= link_to "Books", books_path,
-          class: "text-sm font-semibold text-slate-700 hover:text-blue-700 transition" %>
+  <body style="margin:0; background:#fdf6f0; font-family: Georgia, 'Times New Roman', serif; color:#4a1c35;">
+    <nav style="height:88px; background:#fff7f8; border-bottom:1px solid #f0c4d0; display:flex; align-items:center; justify-content:space-between; padding:0 36px;">
+      <%= link_to root_path, style:"font-size:1.7rem; font-weight:700; color:#7d3554; text-decoration:none;" do %>
+        📖 Book Review Hub
+      <% end %>
 
+      <div style="display:flex; align-items:center; gap:56px; font-weight:700;">
+        <%= link_to "📖 Browse Books", books_path, style:"color:#c2547a; text-decoration:none; border-bottom:3px solid #c2547a; padding:34px 20px 30px;" %>
+        <span style="color:#7d3554;">♡ My Books</span>
+        <span style="color:#7d3554;">♡ My Reviews</span>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:18px;">
         <% if user_signed_in? %>
-          <span class="hidden text-sm text-slate-500 sm:inline">
+          <div style="width:44px; height:44px; border-radius:50%; background:#f8c8d8; display:flex; align-items:center; justify-content:center; font-weight:700; color:#7d3554;">
+            <%= current_user.email.first.upcase %>
+          </div>
+
+          <span style="color:#7d3554; font-size:0.95rem;">
             <%= current_user.email %>
           </span>
 
-          <%= button_to "Logout",
-            destroy_user_session_path,
-            method: :delete,
-            class: "rounded-md bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-100 transition" %>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete,
+            style:"border:1.5px solid #d4849e; background:white; color:#7d3554; border-radius:999px; padding:11px 26px; font-family:Georgia,serif; font-weight:700; cursor:pointer;" %>
         <% else %>
-          <%= link_to "Sign Up",
-            new_user_registration_path,
-            class: "rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition" %>
-
-          <%= link_to "Login",
-            new_user_session_path,
-            class: "rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition" %>
+          <%= link_to "Log in", new_user_session_path, style:"color:#7d3554; font-weight:700; text-decoration:none;" %>
+          <%= link_to "Sign up", new_user_registration_path, style:"background:#c2547a; color:white; border-radius:999px; padding:11px 24px; text-decoration:none; font-weight:700;" %>
         <% end %>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <main class="mx-auto max-w-6xl px-5 py-8">
-    <% if notice %>
-      <p class="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-semibold text-green-700">
-        <%= notice %>
-      </p>
-    <% end %>
+    <main style="padding:24px 36px 60px;">
+      <% if notice %>
+        <p style="background:#fff0f5; border:1px solid #f0b8cc; border-radius:10px; padding:16px 20px; color:#7d3554;">
+          ✓ <%= notice %>
+        </p>
+      <% end %>
 
-    <% if alert %>
-      <p class="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
-        <%= alert %>
-      </p>
-    <% end %>
+      <% if alert %>
+        <p style="background:#fdecea; border:1px solid #f5b7b7; border-radius:10px; padding:16px 20px; color:#9b2c2c;">
+          <%= alert %>
+        </p>
+      <% end %>
 
-    <%= yield %>
-  </main>
-</body>
+      <%= yield %>
+    </main>
+  </body>
+</html>

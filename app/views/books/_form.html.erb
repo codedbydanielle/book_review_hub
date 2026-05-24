@@ -1,9 +1,11 @@
 <%= form_with(model: book, class: "contents") do |form| %>
   <% if book.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+    <div style="background: #fdecea; border: 1px solid #f5b7b7; border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; color: #9b2c2c; font-size: 0.9rem;">
+      <p style="font-weight: 700; margin: 0 0 6px;">
+        <%= pluralize(book.errors.count, "error") %> prevented this book from being saved:
+      </p>
 
-      <ul class="list-disc ml-6">
+      <ul style="margin: 0; padding-left: 1.2rem;">
         <% book.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,32 +13,81 @@
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :title %>
-    <%= form.text_field :title, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": book.errors[:title].none?, "border-red-400 focus:outline-red-600": book.errors[:title].any?}] %>
+  <% [
+    [:title, "Title", :text_field],
+    [:author, "Author", :text_field],
+    [:genre, "Genre", :text_field],
+    [:isbn, "ISBN", :text_field]
+  ].each do |field, label, type| %>
+
+    <div style="margin-bottom: 1.25rem;">
+      <%= form.label field,
+        label,
+        style: "display: block; font-size: 0.88rem; font-weight: 700; color: #7d3554; margin-bottom: 6px;" %>
+
+      <%= form.send(type,
+        field,
+        style: "
+          width: 100%;
+          border: 1.5px solid #{book.errors[field].any? ? '#f5b7b7' : '#f0c4d0'};
+          border-radius: 10px;
+          padding: 10px 14px;
+          font-size: 0.95rem;
+          font-family: Georgia, serif;
+          color: #4a1c35;
+          background: #fffafc;
+          box-sizing: border-box;
+        "
+      ) %>
+    </div>
+
+  <% end %>
+
+  <div style="margin-bottom: 1.5rem;">
+    <%= form.label :description,
+      "Description",
+      style: "display: block; font-size: 0.88rem; font-weight: 700; color: #7d3554; margin-bottom: 6px;" %>
+
+    <%= form.textarea :description,
+      rows: 5,
+      style: "
+        width: 100%;
+        border: 1.5px solid #{book.errors[:description].any? ? '#f5b7b7' : '#f0c4d0'};
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 0.95rem;
+        font-family: Georgia, serif;
+        color: #4a1c35;
+        background: #fffafc;
+        box-sizing: border-box;
+        resize: vertical;
+      "
+    %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :author %>
-    <%= form.text_field :author, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": book.errors[:author].none?, "border-red-400 focus:outline-red-600": book.errors[:author].any?}] %>
-  </div>
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <%= form.submit "Save Book",
+      style: "
+        background-color: #c2547a;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 12px 28px;
+        font-size: 0.95rem;
+        font-family: Georgia, serif;
+        font-weight: 700;
+        cursor: pointer;
+      "
+    %>
 
-  <div class="my-5">
-    <%= form.label :genre %>
-    <%= form.text_field :genre, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": book.errors[:genre].none?, "border-red-400 focus:outline-red-600": book.errors[:genre].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :description %>
-    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": book.errors[:description].none?, "border-red-400 focus:outline-red-600": book.errors[:description].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :isbn %>
-    <%= form.text_field :isbn, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": book.errors[:isbn].none?, "border-red-400 focus:outline-red-600": book.errors[:isbn].any?}] %>
-  </div>
-
-  <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    <%= link_to "Cancel",
+      books_path,
+      style: "
+        color: #b07090;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-decoration: none;
+      "
+    %>
   </div>
 <% end %>
