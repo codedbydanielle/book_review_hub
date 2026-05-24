@@ -1,25 +1,48 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= content_for(:title) || "BookReviewHub" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+<body class="min-h-screen bg-slate-50">
+  <nav class="border-b border-slate-200 bg-white shadow-sm">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+      <%= link_to "Book Review Hub", root_path,
+        class: "text-2xl font-extrabold text-slate-900 hover:text-blue-700 transition" %>
 
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+      <div class="flex items-center gap-4">
+        <%= link_to "Books", books_path,
+          class: "text-sm font-semibold text-slate-700 hover:text-blue-700 transition" %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+        <% if user_signed_in? %>
+          <span class="hidden text-sm text-slate-500 sm:inline">
+            <%= current_user.email %>
+          </span>
 
-  <body>
+          <%= button_to "Logout",
+            destroy_user_session_path,
+            method: :delete,
+            class: "rounded-md bg-red-50 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-100 transition" %>
+        <% else %>
+          <%= link_to "Sign Up",
+            new_user_registration_path,
+            class: "rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition" %>
+
+          <%= link_to "Login",
+            new_user_session_path,
+            class: "rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition" %>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+
+  <main class="mx-auto max-w-6xl px-5 py-8">
     <% if notice %>
-      <p class="notice"><%= notice %></p>
+      <p class="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-semibold text-green-700">
+        <%= notice %>
+      </p>
     <% end %>
 
     <% if alert %>
-      <p class="alert"><%= alert %></p>
+      <p class="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+        <%= alert %>
+      </p>
     <% end %>
 
     <%= yield %>
-  </body>
-</html>
+  </main>
+</body>
