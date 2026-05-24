@@ -35,6 +35,17 @@
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div style="margin-bottom: 1.25rem;">
+        <%= f.label :username,
+          style: "display:block; font-size:0.88rem; font-weight:700; color:#7d3554; margin-bottom:6px;" %>
+
+        <%= f.text_field :username,
+          autofocus: true,
+          autocomplete: "username",
+          placeholder: "danielle_reads",
+          style: "width:100%; border:1.5px solid #f0c4d0; border-radius:10px; padding:10px 14px; font-size:0.95rem; font-family:Georgia, serif; color:#4a1c35; background:#fffafc; box-sizing:border-box;" %>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
         <%= f.label :email,
           style: "
             display: block;

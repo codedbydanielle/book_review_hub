@@ -65,47 +65,35 @@
         </div>
 
         <!-- USER SECTION -->
-        <div style="display:flex; align-items:center; gap:20px;">
-
+         <div style="display:flex; align-items:center; gap:22px;">
           <% if user_signed_in? %>
-
-            <div style="display:flex; align-items:center; gap:14px;">
-
-              <div style="width:52px; height:52px; border-radius:999px; background:linear-gradient(135deg,#f7cad8,#e7a8bc); display:flex; align-items:center; justify-content:center; font-weight:700; color:#7d3554; font-size:1.2rem; box-shadow:0 4px 10px rgba(194,84,122,0.2);">
-                <%= current_user.email.first.upcase %>
+            <div style="display:flex; align-items:center; gap:18px;">
+              <div style="width:52px; height:52px; border-radius:999px; background:linear-gradient(135deg,#f7cad8,#e7a8bc); display:flex; align-items:center; justify-content:center; font-weight:700; color:#7d3554; font-size:1.2rem; box-shadow:0 4px 10px rgba(194,84,122,0.2); flex-shrink:0;">
+                <%= current_user.username.first.upcase %>
               </div>
 
-              <div>
-                <div style="font-size:1rem; color:#5a2340; font-weight:700;">
-                  <%= current_user.email.split("@").first %>
+              <div style="display:flex; flex-direction:column; line-height:1.1;">
+                <div style="font-size:1.05rem; color:#5a2340; font-weight:700; white-space:nowrap;">
+                  <%= current_user.username %>
                 </div>
-
-                <div style="font-size:0.82rem; color:#c48aa2;">
+                <div style="font-size:0.78rem; color:#c48aa2; margin-top:2px;">
                   Reader Profile
                 </div>
               </div>
-
             </div>
 
             <%= button_to "Log out",
               destroy_user_session_path,
               method: :delete,
-              style:"background:white; border:2px solid #e7a8bc; color:#7d3554; border-radius:999px; padding:12px 24px; font-size:0.95rem; font-family:Georgia,serif; cursor:pointer; font-weight:700; transition:all 0.2s ease;" %>
-
+              style:"background:white; border:2px solid #e7a8bc; color:#7d3554; border-radius:999px; padding:12px 24px; font-size:0.95rem; font-family:Georgia,serif; cursor:pointer; font-weight:700;" %>
           <% else %>
-
-            <%= link_to "Log in",
-              new_user_session_path,
+            <%= link_to "Log in", new_user_session_path,
               style:"text-decoration:none; color:#7d3554; font-weight:700; font-size:1rem;" %>
 
-            <%= link_to "Create Account",
-              new_user_registration_path,
+            <%= link_to "Create Account", new_user_registration_path,
               style:"background:linear-gradient(135deg,#c2547a,#e08fad); color:white; text-decoration:none; padding:14px 26px; border-radius:999px; font-weight:700; box-shadow:0 8px 18px rgba(194,84,122,0.2);" %>
-
           <% end %>
-
         </div>
-
       </div>
     </nav>
 
