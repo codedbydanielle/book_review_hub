@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   # GET /books or /books.json
   def index
@@ -23,7 +24,7 @@ class BooksController < ApplicationController
 
   # POST /books or /books.json
   def create
-    @book = Book.new(book_params)
+    @book = current_user.books.new(book_params)
 
     respond_to do |format|
       if @book.save
@@ -60,6 +61,11 @@ class BooksController < ApplicationController
   end
 
   private
+
+    def authorize_user!
+      redirect_to books_path, alert: "Not authorized." unless @book.user == current_user
+    end
+    
     # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params.expect(:id))
