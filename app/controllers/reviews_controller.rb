@@ -1,7 +1,12 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_book
+  before_action :set_book, except: [:my_reviews]
   before_action :set_review, only: [:destroy]
+
+
+def my_reviews
+  @reviews = current_user.reviews.includes(:book).order(created_at: :desc)
+end
 
 def create
   @review = @book.reviews.new(review_params)
