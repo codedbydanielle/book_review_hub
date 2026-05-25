@@ -23,7 +23,7 @@ A web application where readers can discover books, share reviews, and connect o
 ## Setup
 
 1. Clone the repository
-   git clone <https://github.com/codedbydanielle/book_review_hub.git>
+   git clone [<your-repo-url>](https://github.com/codedbydanielle/book_review_hub.git)
    cd book_review_hub
 
 2. Install dependencies
