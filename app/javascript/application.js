@@ -58,6 +58,15 @@ document.addEventListener("turbo:load", () => {
 
       document.getElementById("book_isbn").value = isbn;
 
+      // Cover image
+        if (book.cover && book.cover.large) {
+        document.getElementById("book_open_library_cover_url").value = book.cover.large;
+        } else if (book.cover && book.cover.medium) {
+        document.getElementById("book_open_library_cover_url").value = book.cover.medium;
+        } else if (book.cover && book.cover.small) {
+        document.getElementById("book_open_library_cover_url").value = book.cover.small;
+        }
+
       status.textContent = "✓ Details filled in! Review and edit as needed.";
       status.style.color = "#2d6a4f";
 

@@ -33,11 +33,13 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       if @book.save
+        attach_open_library_cover
+
         format.html { redirect_to @book, notice: "Book was successfully created." }
         format.json { render :show, status: :created, location: @book }
       else
-        format.html { render :new, status: :unprocessable_content }
-        format.json { render json: @book.errors, status: :unprocessable_content }
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @book.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -46,11 +48,13 @@ class BooksController < ApplicationController
   def update
     respond_to do |format|
       if @book.update(book_params)
+        attach_open_library_cover
+
         format.html { redirect_to @book, notice: "Book was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @book }
       else
-        format.html { render :edit, status: :unprocessable_content }
-        format.json { render json: @book.errors, status: :unprocessable_content }
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @book.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -67,6 +71,22 @@ class BooksController < ApplicationController
 
   private
 
+  def attach_open_library_cover
+    return if params[:book][:open_library_cover_url].blank?
+    return if @book.cover_image.attached?
+
+    require "open-uri"
+
+    image_url = params[:book][:open_library_cover_url]
+    downloaded_image = URI.open(image_url)
+
+    @book.cover_image.attach(
+      io: downloaded_image,
+      filename: "open-library-cover.jpg",
+      content_type: "image/jpeg"
+    )
+  end
+
     def authorize_user!
       redirect_to books_path, alert: "Not authorized." unless @book.user == current_user
     end
@@ -78,6 +98,14 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title, :author, :genre, :description, :isbn, :cover_image)
-    end
+params.require(:book).permit(
+  :title,
+  :author,
+  :genre,
+  :description,
+  :isbn,
+  :cover_image,
+  :open_library_cover_url
+)    
+  end
 end
