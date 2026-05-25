@@ -1,24 +1,38 @@
-# README
+# 📖 Book Review Hub
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A web application where readers can discover books, share reviews, and connect over great reads.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
+- Browse and search books
+- Add books manually or auto-fill details using an ISBN lookup (powered by Open Library)
+- Upload book covers or fetch them automatically via Open Library
+- Leave star ratings and written reviews
+- User authentication (sign up, log in, log out)
+- Users can only edit or delete their own books and reviews
 
-* System dependencies
+## Tech Stack
 
-* Configuration
+- Ruby on Rails 8
+- PostgreSQL
+- Tailwind CSS
+- Devise (authentication)
+- Active Storage (cover image uploads)
+- Open Library API (book metadata + covers)
 
-* Database creation
+## Setup
 
-* Database initialization
+1. Clone the repository
+   git clone [<your-repo-url>](https://github.com/codedbydanielle/book_review_hub.git)
+   cd book_review_hub
 
-* How to run the test suite
+2. Install dependencies
+   bundle install
 
-* Services (job queues, cache servers, search engines, etc.)
+3. Set up the database
+   rails db:create db:migrate
 
-* Deployment instructions
+4. Start the server
+   bin/dev
 
-* ...
+5. Visit http://localhost:3000
